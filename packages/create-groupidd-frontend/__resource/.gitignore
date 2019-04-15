@@ -1,0 +1,16 @@
+.DS_Store
+.vscode
+*.iml
+*.sublime-project
+*.sublime-workspace
+*.log
+*.cache
+Thumbs.db
+package-lock.json
+
+.idea/
+node_modules/
+
+assets/*/*.css
+assets/*/*.js
+*.html

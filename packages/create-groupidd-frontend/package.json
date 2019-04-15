@@ -1,0 +1,22 @@
+{
+    "private": true,
+    "name": "@blossom/create-groupidd-frontend",
+    "version": "1.0.0",
+    "description": "GroupIDD 프론트엔드 개발환경 생성",
+    "main": "index.js",
+    "keywords": [
+        "Group IDD",
+        "front-end",
+        "그룹아이디디",
+        "프론트엔드"
+    ],
+    "author": {
+        "name": "Byeonghwa.Yeon",
+        "email": "hwalybell@gmail.com",
+        "url" : "https://github.com/hwaly/"
+    },
+    "repository": "https://github.com/hwaly/blossom/packages/create-groupidd-frontend",
+    "devDependencies": {
+        "fs-extra": "^7.0.1"
+    }
+}

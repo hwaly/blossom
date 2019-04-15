@@ -1,0 +1,10 @@
+{
+    "private": true,
+    "scripts": {
+        "init": "node ./node_modules/create-groupidd-frontend"
+    },
+    "author": "Group IDD 개발그룹",
+    "dependencies": {
+        "create-groupidd-frontend": "file:packages/create-groupidd-frontend"
+    }
+}
