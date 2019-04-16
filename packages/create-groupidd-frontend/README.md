@@ -9,7 +9,15 @@
 #### scripts 수정
 
 - server, watch, dev, prod로 이루어져 있다  
-- 추가는 기본 스크립트를 활용하며 --outputType 사용
+- 추가는 기본 스크립트를 활용
+- --outputType, --notSplitChunks 옵션 사용
+
+##### --outputType
+- 기본은 'web'
+- webpack.config.js의 typeOptions에 추가시 객체 키로 사용
+
+##### --notSplitChunks
+- vendor 파일 사용 안함
 
 ```json
 {
@@ -20,7 +28,9 @@
         "prod": "webpack --mode=production --progress --hide-modules",
         
         // 추가
-        "server_m": "npm run server -- --outputType=mobile"
+        "server_m": "npm run server -- --outputType=mobile",
+        
+        "server_event": "npm run server -- --outputType=eventSample --notSplitChunks"
     }
 }
 ```
@@ -34,21 +44,21 @@
 1. webpack.config.js 안에 내용 붙여넣기
 1. webpack.config.js 안의 변수 typeOptions 내용만 수정 및 추가
 
-#### 추가 객체 키
+#### typeOptions
 
+##### 추가 객체 키
 package.json의 scripts에서 --outputType에서 선언한 값을 사용
 
-
-#### entry
+##### entry
 생성할 파일의 이름과 값들
 
-#### output
+##### output
 생성되는 경로와 이름
 
-#### plugins
+##### plugins
 추가할 플러그인들
 
-#### handlebarsPluginOptions
+##### handlebarsPluginOptions
 페이지 생성에 쓰이는 소스 경로와 출력 경로
 
 
