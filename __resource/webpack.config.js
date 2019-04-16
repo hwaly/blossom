@@ -4,10 +4,12 @@ const HandlebarsPlugin = require('hwaly-handlebars-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-
-module.exports = (env, options) => {
-    const exports = {
+const config = (env, options) => {
+    const type = options.outputType ? options.outputType : 'web';
+    const config = {
+        mode: 'development',
         devtool: 'inline-source-map',
+        entry: typeOptions[type]['entry'],
         output: {
             path: path.resolve(__dirname, '../'),
             filename: 'assets/js/[name].js'
@@ -16,8 +18,7 @@ module.exports = (env, options) => {
             rules: [
                 {
                     test: /\.jsx?$/,
-                    loader: 'babel-loader',
-                    exclude: /node_modules\/(?!(dom7|ssr-window|swiper|hwaly-app)\/).*/
+                    loader: 'babel-loader'
                 },
                 {
                     test: /\.(sa|sc|c)ss$/,
@@ -44,23 +45,13 @@ module.exports = (env, options) => {
                             loader: 'sass-loader',
                             options: {
                                 outputStyle: 'expanded',
-                                indentWidth: 4,
                                 sourceMap: true
                             }
                         },
                     ]
-                },
-                {
-                    test: /\.vue$/,
-                    loader: 'vue-loader'
                 }
             ]
         },
-        // resolve: {
-        //     alias: {
-        //         'vue$': 'vue/dist/vue.esm.js'
-        //     }
-        // },
         devServer: {
             headers: {
                 'Access-Control-Allow-Origin': '*'
@@ -73,15 +64,6 @@ module.exports = (env, options) => {
         plugins: [
             new webpack.LoaderOptionsPlugin({
                 minimize: true
-            }),
-
-            new MiniCssExtractPlugin({
-                filename: 'assets/css/[name].css'
-            }),
-
-            new webpack.ProvidePlugin({
-                $: 'jquery',
-                jQuery: 'jquery'
             })
         ],
         optimization: {
@@ -98,8 +80,18 @@ module.exports = (env, options) => {
         }
     };
 
-    if (options.mode === 'production') {
-        exports.optimization.minimizer = [
+    if (typeOptions[type]['output']) {
+        config.output = Object.assign({}, config.output, typeOptions[type]['output']);
+    }
+
+    if (typeOptions[type]['plugins']) {
+        config.plugins = (config.plugins || []).concat(typeOptions[type]['plugins']);
+    }
+
+    if (options.mode && options.mode === 'production') {
+        config.mode = 'production';
+
+        config.optimization.minimizer = [
             new UglifyJsPlugin({
                 cache: true,
                 parallel: true,
@@ -109,28 +101,66 @@ module.exports = (env, options) => {
         ];
     }
 
-    exports.entry = {
-        app: [
-            './js/web/app.js',
-            './scss/app.scss'
-        ]
-    };
-
     if (!options.watch) {
-        exports.plugins = (exports.plugins || []).concat([
-            new HandlebarsPlugin({
-                path: {
-                    output: path.resolve(process.cwd(), '../')
-                },
-                data: {
-                    exclude: 'index.js'
-                },
-                entryOutput: [
-                    {entry: 'web/*.hbs', output: '[name].html'}
-                ]
-            })
+        const options = {
+            path: {
+                output: path.resolve(process.cwd(), '../')
+            },
+            data: {
+                exclude: 'index.js'
+            }
+        };
+
+        config.plugins = (config.plugins || []).concat([
+            new HandlebarsPlugin(Object.assign({}, options, typeOptions[type]['handlebarsPluginOptions']))
         ]);
     }
 
-    return exports;
+    return config;
+};
+
+module.exports = config;
+
+
+
+const typeOptions = {
+    web: {
+        entry: {
+            app: [
+                './js/web/app.js',
+                './scss/web/app.scss'
+            ]
+        },
+        plugins: [
+            new MiniCssExtractPlugin({
+                filename: 'assets/css/[name].css'
+            })
+        ],
+        handlebarsPluginOptions: {
+            entryOutput: [
+                {entry: 'web/*.hbs', output: '[name].html'}
+            ]
+        }
+    },
+    mobile: {
+        entry: {
+            app: [
+                './js/mobile/app.js',
+                './scss/mobile/app.scss'
+            ]
+        },
+        output: {
+            filename: 'm/assets/js/[name].js'
+        },
+        plugins: [
+            new MiniCssExtractPlugin({
+                filename: 'm/assets/css/[name].css'
+            })
+        ],
+        handlebarsPluginOptions: {
+            entryOutput: [
+                {entry: 'mobile/*.hbs', output: 'm/[name].html'}
+            ]
+        }
+    }
 };

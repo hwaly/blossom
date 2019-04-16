@@ -7,7 +7,8 @@
 *.cache
 Thumbs.db
 package-lock.json
-webpack.config.js
 
+.git*
 .idea/
 node_modules/
+test/

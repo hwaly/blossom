@@ -1,0 +1,56 @@
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title>{{site.title}}</title>
+
+<meta name="author" content="Group IDD 개발팀">
+<meta name="description" content="{{site.description}}">
+<meta name="keywords" content="{{site.keywords}}">
+
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="address=no">
+
+<meta name="author" content="{{site.author}}">
+<meta property="og:url" content="{{og.url}}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{og.title}}">
+<meta property="og:image" content="{{og.image}}">
+<meta property="og:description" content="{{og.description}}">
+<meta property="og:site_name" content="{{og.site_name}}">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:author" content="{{og.author}}">
+
+<link rel="apple-touch-icon" sizes="180x180" href="{{path.images}}/common/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="{{path.images}}/common/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="{{path.images}}/common/favicon-16x16.png">
+<link rel="icon shortcut" type="image/x-icon" href="{{path.images}}/common/favicon.ico">
+
+<link rel="stylesheet" href="{{path.css}}/vendor.css">
+<link rel="stylesheet" href="{{path.css}}/app.css">
+
+<script src="{{path.js}}/vendor.js"></script>
+<script src="{{path.js}}/app.js"></script>
+
+{{#if schema.title}}
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebSite",
+        "name": "{{schema.title}}",
+        "url": "{{schema.url}}",
+        "author": "{{schema.author}}"
+    }
+</script>
+{{/if}}
+
+{{#if googleAnalytics.id}}
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{googleAnalytics.id}}"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', '{{googleAnalytics.id}}');
+</script>
+{{/if}}

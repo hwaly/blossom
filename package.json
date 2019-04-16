@@ -6,5 +6,8 @@
     "author": "Group IDD 개발그룹",
     "dependencies": {
         "create-groupidd-frontend": "file:packages/create-groupidd-frontend"
+    },
+    "devDependencies": {
+        "fs-extra": "^7.0.1"
     }
 }

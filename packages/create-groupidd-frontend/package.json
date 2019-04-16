@@ -16,7 +16,7 @@
         "url" : "https://github.com/hwaly/"
     },
     "repository": "https://github.com/hwaly/blossom/packages/create-groupidd-frontend",
-    "devDependencies": {
+    "dependencies": {
         "fs-extra": "^7.0.1"
     }
 }
